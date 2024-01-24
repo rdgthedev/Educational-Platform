@@ -1,7 +1,33 @@
-var builder = WebApplication.CreateBuilder(args);
+using EducationalPlatform.Data;
+using EducationalPlatform.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+var builder = WebApplication.CreateBuilder(args);
+ConfigureMVC();
+
+
+void ConfigureMVC()
+{
+    builder.Services.AddDbContext<DataContext>(options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+
+    builder.Services.AddIdentity<UserModel, IdentityRole>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
+
+    // Add services to the container.
+    builder.Services.AddControllersWithViews()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+            options.SuppressModelStateInvalidFilter = true;
+    });
+}
+
+
+
 
 var app = builder.Build();
 
@@ -15,9 +41,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

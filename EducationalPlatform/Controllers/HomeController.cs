@@ -1,4 +1,4 @@
-using EducationalPlatform.Models;
+using EducationalPlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
