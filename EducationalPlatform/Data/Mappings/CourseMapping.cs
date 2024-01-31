@@ -9,7 +9,7 @@ namespace EducationalPlatform.Data.Mappings
         public void Configure(EntityTypeBuilder<CourseModel> builder)
         {
             builder.ToTable("Course");
-            builder.HasKey(x => x.CourseId);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace EducationalPlatform.Data.Mappings
                 .HasColumnType("DATETIME");
 
             builder.Property(x => x.LastUpdateDate)
-                .HasColumnName("BirthDate")
+                .HasColumnName("LastUpdateDate")
                 .HasColumnType("DATETIME");
 
             builder.HasMany(x => x.Users)
@@ -53,7 +53,7 @@ namespace EducationalPlatform.Data.Mappings
                         .HasConstraintName("FK_UserCourse_CourseId")
                         .OnDelete(DeleteBehavior.Cascade));
 
-            builder.HasIndex(x => x.Title, "IX_UserCourse_Title")
+            builder.HasIndex(x => x.Title, "IX_Course_Title")
                 .IsUnique();
         }
     }

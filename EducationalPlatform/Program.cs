@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 ConfigureMVC();
 
-
 void ConfigureMVC()
 {
     builder.Services.AddDbContext<DataContext>(options =>
@@ -14,7 +13,24 @@ void ConfigureMVC()
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-    builder.Services.AddIdentity<UserModel, IdentityRole>()
+    builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedEmail = false;
+        options.User.RequireUniqueEmail = true;
+
+        options.Lockout.AllowedForNewUsers = true;
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+        options.Lockout.MaxFailedAccessAttempts = 3;
+
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredUniqueChars = 1;
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 8;
+    })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
@@ -22,11 +38,11 @@ void ConfigureMVC()
     builder.Services.AddControllersWithViews()
     .ConfigureApiBehaviorOptions(options =>
     {
-            options.SuppressModelStateInvalidFilter = true;
+        options.SuppressModelStateInvalidFilter = true;
     });
 }
 
-
+builder.Services.AddAuthorization();
 
 
 var app = builder.Build();
@@ -42,10 +58,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,3 +1,4 @@
+using EducationalPlatform.Models;
 using EducationalPlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,12 +8,12 @@ namespace EducationalPlatform.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
+        [HttpGet("/v1/home")]
         public IActionResult Index()
         {
             return View();

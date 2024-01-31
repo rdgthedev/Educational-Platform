@@ -1,4 +1,5 @@
-﻿using EducationalPlatform.Models;
+﻿using EducationalPlatform.Data.Mappings;
+using EducationalPlatform.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,6 @@ namespace EducationalPlatform.Data
         { 
         }
         
-        DbSet<CourseModel> Courses { get; set; }
+        DbSet<CourseModel> Course { get; set; }
     }
 }

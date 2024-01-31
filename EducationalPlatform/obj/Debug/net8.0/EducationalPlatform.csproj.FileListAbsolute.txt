@@ -8,6 +8,7 @@ C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\EducationalPlatform.pdb
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\Humanizer.dll
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -133,6 +134,7 @@ C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.EducationalPlatform.props
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\scopedcss\Views\Shared\_LayoutLogin.cshtml.rz.scp.css
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\scopedcss\bundle\EducationalPlatform.styles.css
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\scopedcss\projectbundle\EducationalPlatform.bundle.scp.css
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\EducationalPlatform.csproj.CopyComplete

@@ -1,0 +1,45 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LayoutLogin";
+}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 mt-5">
+            <div class="text-center">
+                <h1>Educational Platform</h1><br>
+            </div>
+            <div class="card bg-dark text-light">
+                <div class="card-header text-center">
+                    <strong>Login</strong>
+                </div>
+                <div class="card-body">
+                    @if(TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+                    <form asp-controller="Login" asp-action="Login" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="text" class="form-control shadow-none" placeholder="email@gmail">
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Passowrd" class="form-label">Passowrd</label>
+                            <input asp-for="Password" type="text" class="form-control shadow-none" placeholder="Digite sua senha">
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Entrar</button>
+                        </div>
+                        <p><br>Ainda não possui uma conta? <a asp-controller="Login" asp-action="Register">clique aqui!</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

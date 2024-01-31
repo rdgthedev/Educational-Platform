@@ -1,4 +1,7 @@
-﻿namespace EducationalPlatform.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EducationalPlatform.Models
 {
     public class CourseModel
     {
@@ -8,7 +11,7 @@
         public DateTime CreateDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
 
-        public Guid CourseId { get; set; }
+        
         public List<UserModel> Users { get; set; }
     }
 }
