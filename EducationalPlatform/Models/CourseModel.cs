@@ -11,7 +11,15 @@ namespace EducationalPlatform.Models
         public DateTime CreateDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
 
-        
+        public CourseModel(string title, string description, DateTime? lastUpdateDate = null)
+        {
+            Title = title;
+            Description = description;  
+            CreateDate = DateTime.UtcNow;
+            LastUpdateDate = lastUpdateDate;
+        }
+
+
         public List<UserModel> Users { get; set; }
     }
 }

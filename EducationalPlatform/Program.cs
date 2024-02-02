@@ -34,6 +34,13 @@ void ConfigureMVC()
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
 
+    builder.Services.AddAuthorization();
+
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+    });
+
     // Add services to the container.
     builder.Services.AddControllersWithViews()
     .ConfigureApiBehaviorOptions(options =>
@@ -42,7 +49,7 @@ void ConfigureMVC()
     });
 }
 
-builder.Services.AddAuthorization();
+
 
 
 var app = builder.Build();
@@ -61,9 +68,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

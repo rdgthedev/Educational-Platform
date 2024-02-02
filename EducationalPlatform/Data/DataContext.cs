@@ -12,6 +12,6 @@ namespace EducationalPlatform.Data
         { 
         }
         
-        DbSet<CourseModel> Course { get; set; }
+        public DbSet<CourseModel> Course { get; set; }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model RegisterCourseViewModel
+@{
+    ViewData["Title"] = "Registrar";
+}
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 mt-5">
+            <div class="text-center">
+            </div>
+            <div class="card bg-dark text-light">
+                <div class="card-header text-center">
+                    <strong>Cadastro</strong>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Course" asp-action="CreateCourse" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Título</label>
+                            <input asp-for="Title" type="text" class="form-control shadow-none" placeholder="Digite um título">
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Descrição</label>
+                            <textarea asp-for="Description" class="form-control shadow none"  rows="3" placeholder="Descrição do curso"></textarea>
+                            <span class="text-danger" asp-validation-for="Description"></span>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

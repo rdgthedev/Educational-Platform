@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CourseModel>
+
+@{
+    ViewData["Title"] = "Cursos";
+}
+    <table class="table-dark table table-hover">
+    <caption class="text-center text-dark" style="caption-side: top; font-size: 1.5em; margin-bottom: 10px;">
+        <strong>Lista de Cursos</strong>
+    </caption>
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Título</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Data de Criação</th>
+                <th scope="col">Última atualização</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var course in Model)
+                {
+                    <tr>
+                        <th scope="row">@course.Id</th>
+                        <td>@course.Title</td>
+                        <td>@course.Description</td>
+                        <td>@course.CreateDate.ToString("dd/MM/yyyy")</td>
+                        <td>@course.LastUpdateDate</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
