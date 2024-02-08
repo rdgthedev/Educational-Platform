@@ -15,14 +15,16 @@
                     <strong>Login</strong>
                 </div>
                 <div class="card-body">
-                    @if(TempData["ErrorMessage"] != null)
+                    @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger" role="alert">
                             @TempData["ErrorMessage"]
+                            <button style="position: absolute; top: 0.7rem; right: 0; padding: 0.5rem 1rem;" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     }
                     <form asp-controller="Account" asp-action="Login" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
+                        <input class="type="hidden></input>
                         <div class="mb-3">
                             <label for="Email" class="form-label">Email</label>
                             <input asp-for="Email" type="text" class="form-control shadow-none" placeholder="email@gmail">
@@ -30,7 +32,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" type="text" class="form-control shadow-none" placeholder="Digite sua senha">
+                            <input asp-for="Password" type="password" class="form-control shadow-none" placeholder="Digite sua senha">
                             <span class="text-danger" asp-validation-for="Password"></span>
                         </div>
                         <div class="d-grid">

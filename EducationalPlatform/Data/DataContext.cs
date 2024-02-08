@@ -1,6 +1,4 @@
-﻿using EducationalPlatform.Data.Mappings;
-using EducationalPlatform.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using EducationalPlatform.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

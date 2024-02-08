@@ -1,26 +1,21 @@
-﻿@model RegisterCourseViewModel
+﻿@model CourseModel
 @{
-    ViewData["Title"] = "Registrar";
+    ViewData["Title"] = "Editar Curso";
 }
+
 <div class="container">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 mt-5">
             <div class="text-center">
             </div>
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @TempData["ErrorMessage"]
-                    <button style="position: absolute; top: 0.7rem; right: 0; padding: 0.5rem 1rem;" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            }
             <div class="card bg-dark text-light">
                 <div class="card-header text-center">
-                    <strong>Cadastro</strong>
+                    <strong>Painel de Edição</strong>
                 </div>
                 <div class="card-body">
-                    <form asp-controller="Course" asp-action="CreateCourse" method="post">
+                    <form asp-controller="Course" asp-action="Edit" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
+                        <input type="hidden" asp-for=Id />
                         <div class="mb-3">
                             <label for="Title" class="form-label">Título</label>
                             <input asp-for="Title" type="text" class="form-control shadow-none" placeholder="Digite um título">
@@ -28,11 +23,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="Title" class="form-label">Descrição</label>
-                            <textarea asp-for="Description" class="form-control shadow none"  rows="3" placeholder="Descrição do curso"></textarea>
+                            <textarea asp-for="Description" class="form-control shadow none" rows="3" placeholder="Descrição do curso"></textarea>
                             <span class="text-danger" asp-validation-for="Description"></span>
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
                         </div>
                     </form>
                 </div>
@@ -40,7 +35,4 @@
         </div>
     </div>
 </div>
-
-
-
 

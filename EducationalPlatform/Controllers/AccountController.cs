@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EducationalPlatform.Controllers
 {
-    public class AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> userSignin) : Controller
+    public class AccountController(ILogger<AccountController> logger,UserManager<UserModel> userManager, SignInManager<UserModel> userSignin) : Controller
     {
         private readonly UserManager<UserModel> _userManager = userManager;
         private readonly SignInManager<UserModel> _userSignin = userSignin;
-
 
         [AllowAnonymous]
         [HttpGet]
@@ -28,7 +27,7 @@ namespace EducationalPlatform.Controllers
             }
             try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                UserModel? user = await _userManager.FindByEmailAsync(model.Email);
 
                 if (user == null)
                 {
@@ -36,8 +35,7 @@ namespace EducationalPlatform.Controllers
                     ModelState.AddModelError(string.Empty, $"{nameof(model.Email)} ou Senha inválidos!");
                     return View("Login");
                 }
-
-                var result = await _userSignin.CheckPasswordSignInAsync(user, model.Password, true);
+                var result = await _userSignin.PasswordSignInAsync(user, model.Password, false, true);
 
                 if (!result.Succeeded)
                 {
@@ -52,7 +50,10 @@ namespace EducationalPlatform.Controllers
                     }
                 }
 
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                    return RedirectToAction("Index", "Home");
+
+                return View(model);
             }
             catch (Exception)
             {
@@ -63,10 +64,8 @@ namespace EducationalPlatform.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        public IActionResult Register() => View();
+       
 
         [HttpPost]
         public async Task<IActionResult> Register([FromForm] RegisterViewModel model)
@@ -76,8 +75,8 @@ namespace EducationalPlatform.Controllers
 
             try
             {
-                var user = new UserModel(model.FullName, model.BirthDate, model.Email, model.Phone);
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var userModel = new UserModel(model.FullName, model.BirthDate, model.Email, model.Phone);
+                var result = await _userManager.CreateAsync(userModel, model.Password);
 
                 if (!result.Succeeded)
                 {
@@ -85,11 +84,15 @@ namespace EducationalPlatform.Controllers
                     return View(model);
                 }
 
-                await _userManager.AddToRoleAsync(user, ERoles.User.ToString());
-                var resultLogin = await _userSignin.CheckPasswordSignInAsync(user, model.Password, false);
+                await _userManager.AddToRoleAsync(userModel!, ERoles.User.ToString());
+                var resultLogin = await _userSignin.PasswordSignInAsync(userModel!, model.Password, false, false);
 
                 if (!resultLogin.Succeeded)
-                    throw new Exception();
+                {
+                    ModelState.Clear();
+                    ModelState.AddModelError(string.Empty, "Não foi possível efetuar o cadastro. Tente novamente mais tarde.");
+                    return View(model);
+                }
 
                 return RedirectToAction("Index", "Home");
             }
@@ -97,6 +100,21 @@ namespace EducationalPlatform.Controllers
             {
                 TempData["ErrorMessage"] = "Ocorreu um problema interno!";
                 return View("Register");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                await _userSignin.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            catch(Exception ex)
+            {
+                TempData["ErrorMessage"] = "Ocorreu um erro interno!";
+                return View("Login");
             }
         }
     }

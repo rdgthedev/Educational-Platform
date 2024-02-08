@@ -3,32 +3,43 @@
 @{
     ViewData["Title"] = "Cursos";
 }
-    <table class="table-dark table table-hover">
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<table class="table-dark table table-hover">
     <caption class="text-center text-dark" style="caption-side: top; font-size: 1.5em; margin-bottom: 10px;">
         <strong>Lista de Cursos</strong>
     </caption>
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Título</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Data de Criação</th>
-                <th scope="col">Última atualização</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null)
+    <thead>
+        <tr>
+            <th scope="col" style="text-align: center;">Título</th>
+            <th scope="col" style="text-align: center;">Descrição</th>
+            <th scope="col" style="text-align: center;">Data de Criação</th>
+            <th scope="col" style="text-align: center;">Última atualização</th>
+            <th scope="col" style="text-align: center;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var course in Model)
             {
-                @foreach (var course in Model)
-                {
-                    <tr>
-                        <th scope="row">@course.Id</th>
-                        <td>@course.Title</td>
-                        <td>@course.Description</td>
-                        <td>@course.CreateDate.ToString("dd/MM/yyyy")</td>
-                        <td>@course.LastUpdateDate</td>
-                    </tr>
-                }
+                <tr>
+                    <td style="text-align: center;">@course.Title</td>
+                    <td style="text-align: center;">@course.Description</td>
+                    <td style="text-align: center;">@course.CreateDate.ToString("dd/MM/yyyy")</td>
+                    <td style="text-align: center;">@course.LastUpdateDate</td>
+                    <td style="text-align: center;">
+                        <a class="btn btn-warning mx-2" asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id"><i class="bi bi-pencil-square"></i>Editar</a>
+                        <a class="btn btn-danger mx-2" asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id"><i class="bi bi-trash3-fill"></i>Excluir</a>
+                    </td>
+                </tr>
             }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>

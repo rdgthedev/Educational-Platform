@@ -1,17 +1,19 @@
 using EducationalPlatform.Data;
+using EducationalPlatform.Enums;
 using EducationalPlatform.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
 ConfigureMVC();
 
 void ConfigureMVC()
 {
     builder.Services.AddDbContext<DataContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
     builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
     {
@@ -39,19 +41,16 @@ void ConfigureMVC()
     builder.Services.ConfigureApplicationCookie(options =>
     {
         options.LoginPath = "/Account/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     });
 
     // Add services to the container.
     builder.Services.AddControllersWithViews()
-    .ConfigureApiBehaviorOptions(options =>
-    {
-        options.SuppressModelStateInvalidFilter = true;
-    });
+.ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 }
-
-
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -71,5 +70,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    
 
 app.Run();

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace EducationalPlatform.Models
+﻿namespace EducationalPlatform.Models
 {
     public class CourseModel
     {
@@ -18,7 +15,6 @@ namespace EducationalPlatform.Models
             CreateDate = DateTime.UtcNow;
             LastUpdateDate = lastUpdateDate;
         }
-
 
         public List<UserModel> Users { get; set; }
     }
