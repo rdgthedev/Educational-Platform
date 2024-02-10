@@ -2,6 +2,14 @@
     ViewData["Title"] = "Página Inicial";
 }
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+        <button style="position: absolute; top: 0.7rem; right: 0; padding: 0.5rem 1rem;" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="text-center">
     <h1 class="display-4">Bem Vindo!</h1>
     <a asp-controller="Account" asp-action="Logout">signOut</a>

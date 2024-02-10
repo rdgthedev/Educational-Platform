@@ -142,3 +142,7 @@ C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\EducationalPlatform.pdb
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\EducationalPlatform.genruntimeconfig.cache
 C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\ref\EducationalPlatform.dll
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\JetBrains.Annotations.dll
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\X.PagedList.dll
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
+C:\Users\rodri\Projetos\EducationalPlatform\EducationalPlatform\obj\Debug\net8.0\EducationalPlatform.MvcApplicationPartsAssemblyInfo.cs

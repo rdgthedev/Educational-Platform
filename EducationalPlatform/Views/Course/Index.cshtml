@@ -1,5 +1,5 @@
-﻿@model IEnumerable<CourseModel>
-
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<CourseModel>
 @{
     ViewData["Title"] = "Cursos";
 }
@@ -11,15 +11,35 @@
     </div>
 }
 
+@if(TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+        <button style="position: absolute; top: 0.7rem; right: 0; padding: 0.5rem 1rem;" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <table class="table-dark table table-hover">
     <caption class="text-center text-dark" style="caption-side: top; font-size: 1.5em; margin-bottom: 10px;">
         <strong>Lista de Cursos</strong>
     </caption>
+
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" asp-controller="Course" asp-action="Index" method="get">
+        <div class="input-group">
+            <input class="form-control" type="text" name="searchString" placeholder="Search for..." aria-label="Search" aria-describedby="btnNavbarSearch" />
+            <button class="btn btn-primary" id="btnNavbarSearch" type="submit">Search</button>
+        </div>
+    </form>
+
     <thead>
         <tr>
-            <th scope="col" style="text-align: center;">Título</th>
+            <th scope="col" style="text-align: center;">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]">Título</a>
+            </th>
             <th scope="col" style="text-align: center;">Descrição</th>
-            <th scope="col" style="text-align: center;">Data de Criação</th>
+            <th scope="col" style="text-align: center;">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">Data de criação</a>
+            </th>
             <th scope="col" style="text-align: center;">Última atualização</th>
             <th scope="col" style="text-align: center;">Ações</th>
         </tr>
@@ -43,3 +63,42 @@
         }
     </tbody>
 </table>
+<div class="row">
+    <div class="col col-md-8">
+        <div class="btn-group" role="group" aria-label="Paginação">
+            @if (Model!.HasPreviousPage)
+            {
+                <a class="btn btn-secondary"
+                asp-action="Index"
+                asp-route-sortOrder="@ViewData["CurrentSort"]"
+                asp-route-pageNumber="1">Primeira</a>
+
+                <a class="btn btn-secondary"
+                   asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageNumber - 1))">Anterior</a>
+            }
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <a class="btn btn-secondary @((i == Model.PageNumber) ? "active" : "")" 
+                asp-route-sortOrder="@ViewData["CurrentSort"]"
+                asp-action="Index"
+                asp-route-pageNumber="@i"
+                >@i</a>
+            }
+            @if (Model.HasNextPage)
+            {
+                <a class="btn btn-secondary"
+                    asp-action="Index"
+                    asp-route-sortOrder="@ViewData["CurrentSort"]"
+                    asp-route-pageNumber="@(Model.PageNumber + 1)"   
+                >Próxima</a>
+
+                <a class="btn btn-secondary"
+                   asp-action="Index"
+                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                   asp-route-pageNumber="@(Model.PageCount)">Última</a>
+            }
+        </div>
+    </div>
+</div>

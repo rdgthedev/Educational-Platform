@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EducationalPlatform.Controllers
 {
-    public class AccountController(ILogger<AccountController> logger,UserManager<UserModel> userManager, SignInManager<UserModel> userSignin) : Controller
+    public class AccountController(UserManager<UserModel> userManager, SignInManager<UserModel> userSignin) : Controller
     {
         private readonly UserManager<UserModel> _userManager = userManager;
         private readonly SignInManager<UserModel> _userSignin = userSignin;
@@ -41,7 +41,7 @@ namespace EducationalPlatform.Controllers
                 {
                     await _userManager.AccessFailedAsync(user);
                     ModelState.AddModelError(string.Empty, $"{nameof(model.Email)} ou Senha inválidos!");
-
+                    
                     if (result.IsLockedOut)
                     {
                         ModelState.Clear();
@@ -111,7 +111,7 @@ namespace EducationalPlatform.Controllers
                 await _userSignin.SignOutAsync();
                 return RedirectToAction("Index", "Home");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 TempData["ErrorMessage"] = "Ocorreu um erro interno!";
                 return View("Login");

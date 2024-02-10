@@ -2,20 +2,46 @@
 using EducationalPlatform.Exceptions;
 using EducationalPlatform.Models;
 using EducationalPlatform.Models.ViewModels;
+using EducationalPlatform.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace EducationalPlatform.Controllers
 {
-    public class CourseController(DataContext dataContext) : Controller
+    public class CourseController(DataContext dataContext, IOrderService orderService) : Controller
     {
         private readonly DataContext _dataContext = dataContext;
+        private readonly IOrderService _orderService = orderService;
+
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int? pageNumber, 
+            [FromQuery] string searchString, 
+            [FromQuery] string sortOrder)
         {
-            var courses = await _dataContext.Course.AsNoTracking().ToListAsync();
-            return View(courses);
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            try
+            {
+                IQueryable<CourseModel> coursesQuery = _dataContext.Course.AsNoTracking();
+
+                if (!string.IsNullOrEmpty(searchString))
+                    coursesQuery = coursesQuery.Where(x => x.Title.Contains(searchString));
+
+                coursesQuery = _orderService.Order(coursesQuery, sortOrder);
+
+                var courses = await coursesQuery.ToPagedListAsync(pageNumber ?? 1, 10);
+                return View(courses);
+            }
+            catch (Exception)
+            {
+                await Task.Delay(5000);
+                TempData["ErrorMessage"] = "Occoreu um erro interno!";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpGet]
@@ -69,7 +95,7 @@ namespace EducationalPlatform.Controllers
 
                 return View(course);
             }
-            catch (CourseNotFoundException ex) 
+            catch (CourseNotFoundException ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
                 return View();

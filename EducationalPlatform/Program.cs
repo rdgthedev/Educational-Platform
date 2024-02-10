@@ -1,14 +1,16 @@
 using EducationalPlatform.Data;
 using EducationalPlatform.Enums;
 using EducationalPlatform.Models;
+using EducationalPlatform.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-ConfigureMVC();
+ConfigureMVC(builder);
+ConfigureServices(builder);
 
-void ConfigureMVC()
+void ConfigureMVC(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<DataContext>(options =>
         {
@@ -37,7 +39,6 @@ void ConfigureMVC()
     .AddDefaultTokenProviders();
 
     builder.Services.AddAuthorization();
-
     builder.Services.ConfigureApplicationCookie(options =>
     {
         options.LoginPath = "/Account/Login";
@@ -51,6 +52,13 @@ void ConfigureMVC()
     options.SuppressModelStateInvalidFilter = true;
 });
 }
+
+void ConfigureServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddScoped<IOrderService, OrderService>();
+}
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
